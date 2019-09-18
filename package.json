@@ -10,13 +10,10 @@
   "author": "Arianna Pacheco",
   "license": "MIT",
   "scripts": {
-    "htmlhint": "htmlhint dist/*.html ",
     "eslint": "eslint --ext .js src/ test/",
     "stylelint": "stylelint --aei src/**/*.css",
     "lint": "npm run eslint && npm run htmlhint && npm run stylelint",
-    "test": "jest --verbose --coverage",
-    "test:coverage": "jest --coverage",
-    "pretest": "npm run lint"
+    "test:coverage": "jest --coverage"
   },
   "bugs": {
     "url": "https://github.com/jorgelisari1/LIM010-fe-md-links/issues"
@@ -39,5 +36,11 @@
     "regenerator-runtime": "^0.13.1",
     "stylelint": "^10.1.0",
     "stylelint-config-recommended": "^2.2.0"
+  },
+  "dependencies": {
+    "jsdom": "^13.2.0",
+    "markdown-link-extractor": "^1.2.1",
+    "node-fetch": "^2.6.0",
+    "showdown": "^1.9.0"
   }
 }
