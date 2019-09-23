@@ -115,7 +115,7 @@ Broken: 1
 ## implementación de la librería 
 
 Se creo el flujograma para tener una guía de la implementación y poder definir la arquitectura del proyecto.
-![Diagrama](limg/MDLINKS.png)
+![Diagrama](img/MDLINKS.png)
 
 
 
