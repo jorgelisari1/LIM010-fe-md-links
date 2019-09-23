@@ -117,7 +117,7 @@ Broken: 1
 Se creo el flujograma para tener una guía de la implementación y poder definir la arquitectura del proyecto.
 
 
-![Diagrama](img/MDLINKS.png)
+![Diagrama](img/MD-LINKS.png)
 
 
 ## Backlog para la implementación de la librería
