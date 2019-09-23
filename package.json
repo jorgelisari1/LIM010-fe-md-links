@@ -9,6 +9,9 @@
   },
   "author": "Arianna Pacheco",
   "license": "MIT",
+  "bin": {
+    "md-links": "lib/cli.js"
+  },
   "scripts": {
     "eslint": "eslint --ext .js src/ test/",
     "stylelint": "stylelint --aei src/**/*.css",

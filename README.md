@@ -1,23 +1,8 @@
 # Markdown Links
 
 ## Preámbulo
-
-[Markdown](https://es.wikipedia.org/wiki/Markdown) es un lenguaje de marcado
-ligero muy popular entre developers. Es usado en muchísimas plataformas que
-manejan texto plano (GitHub, foros, blogs, ...), y es muy común
-encontrar varios archivos en ese formato en cualquier tipo de repositorio
-(empezando por el tradicional `README.md`).
-
-Estos archivos `Markdown` normalmente contienen _links_ (vínculos/ligas) que
-muchas veces están rotos o ya no son válidos y eso perjudica mucho el valor de
-la información que se quiere compartir.
-
-Dentro de una comunidad de código abierto, nos han propuesto crear una
-herramienta usando [Node.js](https://nodejs.org/), que lea y analice archivos
-en formato `Markdown`, para verificar los links que contengan y reportar
-algunas estadísticas.
-
-![md-links](https://user-images.githubusercontent.com/110297/42118443-b7a5f1f0-7bc8-11e8-96ad-9cc5593715a6.jpg)
+Librería que permite leer y analizar archivos [Markdown](https://es.wikipedia.org/wiki/Markdown), verificando los links que contienen y reportandoalgunas estadísticas.
+![Markdown](https://i.github-camo.com/60e36d65c0697bc6d5bad68ee433f3bf2fbef4a8/68747470733a2f2f7261772e67697468756275736572636f6e74656e742e636f6d2f74726176732f6d61726b646f776e2d7064662f6d61737465722f6173736574732f746573747064662e706e67)
 
 ## Introducción
 

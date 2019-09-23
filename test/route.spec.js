@@ -1,3 +1,4 @@
+const isValidRoute = require('../lib/links.js').isValidRoute;
 const itsAbsolute = require('../lib/links.js').itsAbsolute;
 const changeToAbsolute = require('../lib/links.js').changeToAbsolute;
 const isFilePath = require('../lib/links.js').isFilePath;
@@ -11,31 +12,55 @@ const validateLinks = require('../lib/links.js').validateLinks;
 const route = 'test\\folder\\exampe1.txt';
 const route2 = 'C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\exampe1.txt';
 const arrInput = [
-  {href: 'https://es.wikipedia.org/wiki/Markdow',
-text: 'Markdown',
-file:'C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\ALGO.md',},
-{ href: 'https://nodejs.org/',
-text: 'Node.js',
-file:'C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\ALGO.md',},
-{ href: 'https://laboratoria.com',
-text: 'laboratoria',
-file:'C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\ALGO.md',
+  {
+    href: 'https://es.wikipedia.org/wiki/Markdow',
+    text: 'Markdown',
+    file: 'C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\ALGO.md',
+  },
+  {
+    href: 'https://nodejs.org/',
+    text: 'Node.js',
+    file: 'C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\ALGO.md',
+  },
+  {
+    href: 'https://laboratoria.com',
+    text: 'laboratoria 1111111111111111111111111111111111111',
+    file: 'C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\ALGO.md',
+  }];
+const arrOutput = [{
+  href: 'https://es.wikipedia.org/wiki/Markdow',
+  text: 'Markdown',
+  file: 'C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\ALGO.md',
+  status: 404,
+  statusText: 'Fail',
+},
+{
+  href: 'https://nodejs.org/',
+  text: 'Node.js',
+  file: 'C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\ALGO.md',
+  status: 200,
+  statusText: 'OK',
+},
+{
+  href: 'https://laboratoria.com',
+  text: 'laboratoria 1111111111111111111111111111111111111',
+  file: 'C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\ALGO.md',
+  status: '',
+  statusText: 'Este link no existe',
 }];
-const arrOutput =[ { href: 'https://es.wikipedia.org/wiki/Markdow',
-text: 'Markdown',
-file:'C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\ALGO.md',
-status: 404,
-statusText: 'Fail' },
-{ href: 'https://nodejs.org/',
-text: 'Node.js',
-file:'C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\ALGO.md',
-status: 200,
-statusText: 'OK' },
-{ href: 'https://laboratoria.com',
-text: 'laboratoria',
-file:'C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\ALGO.md',
-status:'',
-statusText: 'Este link no existe' }];
+
+
+describe('isValidRoute', () => {
+  it('Debería ser una función', () => {
+    expect(typeof isValidRoute).toBe('function');
+  });
+  it('Debería retornar true si es la ruta es válida', () => {
+    expect(isValidRoute(route2)).toBe(true);
+  });
+  it('Debería retornar false si es la ruta no es válida', () => {
+    expect(isValidRoute('C:\\Users\\C:\\projects')).toBe(false);
+  });
+});
 
 describe('itsAbsolute', () => {
   it('debería ser una función', () => {
@@ -96,7 +121,7 @@ describe('getContent', () => {
   });
   it('Debería extraer contenido del archivo md y devolverlo como string', () => {
     const arr = searchFilesMd(getFiles('C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder'));
-    expect(getContent(arr[0])).toBe(`[Markdown](https://es.wikipedia.org/wiki/Markdow).[Node.js](https://nodejs.org/). mas informacion en [laboratoria](https://www.laboratoria.com).`);
+    expect(getContent(arr[0])).toBe('[Markdown](https://es.wikipedia.org/wiki/Markdow).[Node.js](https://nodejs.org/). mas informacion en [laboratoria 111111111111111111111111111111111111111111111111111](https://www.laboratoria.com).');
   });
 });
 
@@ -105,7 +130,7 @@ describe('getLinks', () => {
     expect(typeof getLinks).toBe('function');
   });
   it('Debería devolver un array de objetos(href, text, file)', () => {
-    expect(getLinks('C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\ALGO.md')).toEqual([{ file: 'C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\ALGO.md', href: 'https://es.wikipedia.org/wiki/Markdow', text: 'Markdown' }, { file: 'C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\ALGO.md', href: 'https://nodejs.org/', text: 'Node.js' }, { file: 'C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\ALGO.md', href: 'https://www.laboratoria.com', text: 'laboratoria' }]);
+    expect(getLinks('C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\ALGO.md', getContent('C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\ALGO.md'))).toEqual([{ file: 'C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\ALGO.md', href: 'https://es.wikipedia.org/wiki/Markdow', text: 'Markdown' }, { file: 'C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\ALGO.md', href: 'https://nodejs.org/', text: 'Node.js' }, { file: 'C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\ALGO.md', href: 'https://www.laboratoria.com', text: 'laboratoria 1111111111111111111111111111111111111' }]);
   });
 });
 
@@ -113,11 +138,9 @@ describe('validateLinks', () => {
   it('Debería ser una función', () => {
     expect(typeof validateLinks).toBe('function');
   });
-  it('Debería retornar el array de links con el estado', (done) => {
-    return validateLinks(arrInput)
+  it('Debería retornar el array de links con el estado', done => validateLinks(arrInput)
     .then((res) => {
       expect(res).toEqual(arrOutput);
-      done()
-    })
-  });
+      done();
+    }));
 });
