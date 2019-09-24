@@ -5,7 +5,7 @@
   "main": "src/lib/index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jorgelisari1/LIM010-fe-md-links.git"
+    "url": "git+https://github.com/jorgelisari1/md-links.git"
   },
   "author": "Arianna Pacheco",
   "license": "MIT",
@@ -15,19 +15,14 @@
   "scripts": {
     "eslint": "eslint --ext .js src/ test/",
     "stylelint": "stylelint --aei src/**/*.css",
-    "lint": "npm run eslint && npm run htmlhint && npm run stylelint",
     "test:coverage": "jest --coverage"
   },
   "bugs": {
-    "url": "https://github.com/jorgelisari1/LIM010-fe-md-links/issues"
+    "url": "https://github.com/jorgelisari1/md-links/issues"
   },
-  "homepage": "https://github.com/jorgelisari1/LIM010-fe-md-links#readme",
+  "homepage": "https://github.com/jorgelisari1/md-links#readme",
   "devDependencies": {
-    "@babel/core": "^7.6.0",
-    "@babel/plugin-transform-modules-commonjs": "^7.2.0",
-    "@babel/preset-env": "^7.6.0",
-    "babel-core": "^7.0.0-bridge.0",
-    "babel-jest": "^24.9.0",
+
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.2.0",
     "eslint-plugin-import": "^2.18.2",
@@ -43,7 +38,6 @@
   "dependencies": {
     "jsdom": "^13.2.0",
     "markdown-link-extractor": "^1.2.1",
-    "node-fetch": "^2.6.0",
-    "showdown": "^1.9.0"
+    "node-fetch": "^2.6.0"
   }
 }
