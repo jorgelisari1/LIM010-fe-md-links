@@ -7,7 +7,7 @@ Librería que permite leer y analizar archivos [Markdown](https://es.wikipedia.o
 ## Instalación
 Para instalar esta **librería** debe ejecutar la siguiente linea de comando:
 
-npm i jorgelisari1/LIM010-fe-md-links
+npm i jorgelisari1/md-links
 
 Tambien puedes invocar en la línea de comando como una interfaz que puedas importar con require para usarlo programáticamente.
 
