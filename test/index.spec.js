@@ -37,8 +37,8 @@ const arrOutput = [{
   href: 'https://www.laboratoria.com',
   text: 'laboratoria 1111111111111111111111111111111111111',
   file: 'C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\ALGO.md',
-  status: '',
-  statusText: 'Este link no existe',
+  status: ':not exist',
+  statusText: 'Fail',
 }];
 
 describe('getArrLinks', () => {
