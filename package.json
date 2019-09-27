@@ -22,7 +22,6 @@
   },
   "homepage": "https://github.com/jorgelisari1/md-links#readme",
   "devDependencies": {
-
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.2.0",
     "eslint-plugin-import": "^2.18.2",

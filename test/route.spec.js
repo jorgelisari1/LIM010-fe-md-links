@@ -9,42 +9,42 @@ const getLinks = require('../lib/links.js').getLinks;
 const validateLinks = require('../lib/links.js').validateLinks;
 
 // example case
+const cwd = process.cwd().concat('\\test');
 const route = 'test\\folder\\exampe1.txt';
-const route2 = 'C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\exampe1.txt';
 const arrInput = [
   {
     href: 'https://es.wikipedia.org/wiki/Markdow',
     text: 'Markdown',
-    file: 'C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\ALGO.md',
+    file: cwd,
   },
   {
     href: 'https://nodejs.org/',
     text: 'Node.js',
-    file: 'C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\ALGO.md',
+    file: cwd,
   },
   {
     href: 'https://laboratoria.com',
     text: 'laboratoria 1111111111111111111111111111111111111',
-    file: 'C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\ALGO.md',
+    file: cwd,
   }];
 const arrOutput = [{
   href: 'https://es.wikipedia.org/wiki/Markdow',
   text: 'Markdown',
-  file: 'C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\ALGO.md',
+  file: cwd,
   status: 404,
   statusText: 'Fail',
 },
 {
   href: 'https://nodejs.org/',
   text: 'Node.js',
-  file: 'C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\ALGO.md',
+  file: cwd,
   status: 200,
   statusText: 'OK',
 },
 {
   href: 'https://laboratoria.com',
   text: 'laboratoria 1111111111111111111111111111111111111',
-  file: 'C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\ALGO.md',
+  file: cwd,
   status: ':not exist',
   statusText: 'Fail',
 }];
@@ -55,10 +55,10 @@ describe('isValidRoute', () => {
     expect(typeof isValidRoute).toBe('function');
   });
   it('Debería retornar true si es la ruta es válida', () => {
-    expect(isValidRoute(route2)).toBe(true);
+    expect(isValidRoute(cwd)).toBe(true);
   });
   it('Debería retornar false si es la ruta no es válida', () => {
-    expect(isValidRoute('C:\\Users\\C:\\projects')).toBe(false);
+    expect(isValidRoute('C:\\cualquiercosa')).toBe(false);
   });
 });
 
@@ -72,7 +72,7 @@ describe('itsAbsolute', () => {
     expect(resultemp).toBe(false);
   });
   it('Debería retornar true para la ruta absoluta', () => {
-    const resultemp2 = itsAbsolute(route2);
+    const resultemp2 = itsAbsolute(cwd);
     expect(resultemp2).toBe(true);
   });
 });
@@ -83,7 +83,8 @@ describe('changeToAbsolute', () => {
   });
   it('Debería retornar una ruta absoluta', () => {
     const salid = changeToAbsolute(route);
-    expect(salid).toBe(route2);
+    const routeabs = cwd.concat('\\folder\\exampe1.txt');
+    expect(salid).toBe(routeabs);
   });
 });
 
@@ -92,7 +93,8 @@ describe('isFilePath', () => {
     expect(typeof isFilePath).toBe('function');
   });
   it('Debería retornar true porque es una ruta de archivo', () => {
-    const resultemp = isFilePath(route2);
+    const routeabs = cwd.concat('\\folder\\exampe1.txt');
+    const resultemp = isFilePath(routeabs);
     expect(resultemp).toBe(true);
   });
 });
@@ -102,7 +104,8 @@ describe('getFiles', () => {
     expect(typeof getFiles).toBe('function');
   });
   it('Debería recibir la ruta de un archivo y devolver un array con la ruta del archivo', () => {
-    expect(getFiles('C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder')).toEqual(['C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\ALGO.md', 'C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\exampe1.txt']);
+    const routeE = cwd.concat('\\folder');
+    expect(getFiles(routeE)).toEqual([routeE.concat('\\ALGO.md'), 'C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\exampe1.txt']);
   });
 });
 
@@ -111,7 +114,7 @@ describe('searchFilesMd', () => {
     expect(typeof searchFilesMd).toBe('function');
   });
   it('Debería recibir un array de rutas de archivos y obtener solo los archivos .md', () => {
-    expect(searchFilesMd(getFiles('C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder'))).toEqual(['C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\ALGO.md']);
+    expect(searchFilesMd(getFiles(cwd))).toEqual([cwd.concat('\\folder\\ALGO.md')]);
   });
 });
 
@@ -120,7 +123,7 @@ describe('getContent', () => {
     expect(typeof getContent).toBe('function');
   });
   it('Debería extraer contenido del archivo md y devolverlo como string', () => {
-    const arr = searchFilesMd(getFiles('C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder'));
+    const arr = searchFilesMd(getFiles(cwd));
     expect(getContent(arr[0])).toBe('[Markdown](https://es.wikipedia.org/wiki/Markdow).[Node.js](https://nodejs.org/). mas informacion en [laboratoria 111111111111111111111111111111111111111111111111111](https://www.laboratoria.com).');
   });
 });
@@ -130,7 +133,8 @@ describe('getLinks', () => {
     expect(typeof getLinks).toBe('function');
   });
   it('Debería devolver un array de objetos(href, text, file)', () => {
-    expect(getLinks('C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\ALGO.md', getContent('C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\ALGO.md'))).toEqual([{ file: 'C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\ALGO.md', href: 'https://es.wikipedia.org/wiki/Markdow', text: 'Markdown' }, { file: 'C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\ALGO.md', href: 'https://nodejs.org/', text: 'Node.js' }, { file: 'C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\ALGO.md', href: 'https://www.laboratoria.com', text: 'laboratoria 1111111111111111111111111111111111111' }]);
+    const routeabs = cwd.concat('\\folder\\ALGO.md');
+    expect(getLinks(routeabs, getContent(routeabs))).toEqual([{ file: cwd.concat('\\folder\\ALGO.md'), href: 'https://es.wikipedia.org/wiki/Markdow', text: 'Markdown' }, { file: cwd.concat('\\folder\\ALGO.md'), href: 'https://nodejs.org/', text: 'Node.js' }, { file: cwd.concat('\\folder\\ALGO.md'), href: 'https://www.laboratoria.com', text: 'laboratoria 1111111111111111111111111111111111111' }]);
   });
 });
 
