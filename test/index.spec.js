@@ -63,4 +63,8 @@ describe('mdLinks', () => {
     .then((res) => {
       expect(res).toEqual(arrOutput);
     }));
+  it('Debería retornar "Error: invalid route"', () => mdLinks('test\\foldering', { validate: true })
+    .catch((error) => {
+      expect(error.message).toBe('invalid route');
+    }));
 });

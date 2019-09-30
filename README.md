@@ -129,3 +129,33 @@ Se hizo uso de las herramientas de GitHub para la organización y planificación
 
 ![proyect 3 ](img/sprint.png)
 
+## Objetivos de aprendizaje
+### Javascript
+- [x] Uso de callbacks
+- [x] Consumo de Promesas
+- [x] Creacion de Promesas
+- [x] Modulos de Js
+- [x] Recursión
+
+### Node
+- [x] Sistema de archivos
+- [x] package.json
+- [x] crear modules
+- [x] Instalar y usar modules
+- [x] npm scripts
+- [x] CLI (Command Line Interface - Interfaz de Línea de Comando)
+
+### Testing
+- [x] Testeo de tus funciones
+- [x] Testeo asíncrono
+- [ ] Uso de librerias de Mock
+- [ ] Mocks manuales
+- [ ] Testeo para multiples Sistemas Operativos
+
+### Git y Github
+- [x] Organización en Github
+
+### Buenas prácticas de desarrollo
+- [x] Modularización
+- [x] Nomenclatura / Semántica
+- [x] Linting
