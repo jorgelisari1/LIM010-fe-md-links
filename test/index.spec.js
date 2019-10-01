@@ -1,8 +1,10 @@
+const path = require('path');
 const getArrLinks = require('../lib/index.js').getArrLinks;
 const mdLinks = require('../lib/index.js').mdLinks;
-// const validateLinks = require('../lib/links').validateLinks;
 
-const cwd = process.cwd().concat('\\test\\folder');
+
+const cwd = path.join(process.cwd(), '\\test\\folder');
+console.log(cwd);
 const arrInput = [
   {
     href: 'https://es.wikipedia.org/wiki/Markdow',

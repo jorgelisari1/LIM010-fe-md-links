@@ -2,7 +2,7 @@
   "name": "lim010-fe-md-links",
   "version": "1.0.0",
   "description": "Analiza archivos markdown y verifica si los links que contiene son validos o no.",
-  "main": "src/lib/index.js",
+  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jorgelisari1/md-links.git"
