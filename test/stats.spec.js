@@ -1,22 +1,23 @@
+const path = require('path');
 const getTotalLinks = require('../lib/stats.js').getTotalLinks;
 const getDiferentTotalLinks = require('../lib/stats.js').getDiferentTotalLinks;
 
-const cwd = process.cwd().concat('\\test\\folder');
+const cwd = path.join(process.cwd(), '\\test\\folder');
 const arrInput = [
   {
     href: 'https://es.wikipedia.org/wiki/Markdow',
     text: 'Markdown',
-    file: cwd.concat('\\ALGO.md'),
+    file: path.join(cwd, '\\ALGO.md'),
   },
   {
     href: 'https://nodejs.org/',
     text: 'Node.js',
-    file: cwd.concat('\\ALGO.md'),
+    file: path.join(cwd, '\\ALGO.md'),
   },
   {
     href: 'https://www.laboratoria.com',
     text: 'laboratoria 1111111111111111111111111111111111111',
-    file: cwd.concat('\\ALGO.md'),
+    file: path.join(cwd, '\\ALGO.md'),
   }];
 
 describe('getTotalLinks', () => {

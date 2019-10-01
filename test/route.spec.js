@@ -1,3 +1,4 @@
+const path = require('path');
 const isValidRoute = require('../lib/links.js').isValidRoute;
 const itsAbsolute = require('../lib/links.js').itsAbsolute;
 const changeToAbsolute = require('../lib/links.js').changeToAbsolute;
@@ -6,10 +7,11 @@ const getFiles = require('../lib/links.js').getFiles;
 const searchFilesMd = require('../lib/links.js').searchFilesMd;
 const getContent = require('../lib/links.js').getContent;
 const getLinks = require('../lib/links.js').getLinks;
+const getArrLinks = require('../lib/links.js').getArrLinks;
 const validateLinks = require('../lib/links.js').validateLinks;
 
 // example case
-const cwd = process.cwd().concat('\\test');
+const cwd = path.join(process.cwd(), '\\test');
 const route = 'test\\folder\\exampe1.txt';
 const arrInput = [
   {
@@ -83,7 +85,7 @@ describe('changeToAbsolute', () => {
   });
   it('Debería retornar una ruta absoluta', () => {
     const salid = changeToAbsolute(route);
-    const routeabs = cwd.concat('\\folder\\exampe1.txt');
+    const routeabs = path.join(cwd, '\\folder\\exampe1.txt');
     expect(salid).toBe(routeabs);
   });
 });
@@ -93,7 +95,7 @@ describe('isFilePath', () => {
     expect(typeof isFilePath).toBe('function');
   });
   it('Debería retornar true porque es una ruta de archivo', () => {
-    const routeabs = cwd.concat('\\folder\\exampe1.txt');
+    const routeabs = path.join(cwd, '\\folder\\exampe1.txt');
     const resultemp = isFilePath(routeabs);
     expect(resultemp).toBe(true);
   });
@@ -104,8 +106,8 @@ describe('getFiles', () => {
     expect(typeof getFiles).toBe('function');
   });
   it('Debería recibir la ruta de un archivo y devolver un array con la ruta del archivo', () => {
-    const routeE = cwd.concat('\\folder');
-    expect(getFiles(routeE)).toEqual([routeE.concat('\\ALGO.md'), 'C:\\Users\\User\\Desktop\\LIM010-fe-md-links\\test\\folder\\exampe1.txt']);
+    const routeE = path.join(cwd, '\\folder');
+    expect(getFiles(routeE)).toEqual([path.join(cwd, '\\folder\\ALGO.md'), path.join(cwd, '\\folder\\exampe1.txt')]);
   });
 });
 
@@ -114,7 +116,7 @@ describe('searchFilesMd', () => {
     expect(typeof searchFilesMd).toBe('function');
   });
   it('Debería recibir un array de rutas de archivos y obtener solo los archivos .md', () => {
-    expect(searchFilesMd(getFiles(cwd))).toEqual([cwd.concat('\\folder\\ALGO.md')]);
+    expect(searchFilesMd(getFiles(cwd))).toEqual([path.join(cwd, '\\folder\\ALGO.md')]);
   });
 });
 
@@ -123,7 +125,7 @@ describe('getContent', () => {
     expect(typeof getContent).toBe('function');
   });
   it('Debería extraer contenido del archivo md y devolverlo como string', () => {
-    const arr = searchFilesMd(getFiles(cwd));
+    const arr = searchFilesMd(getFiles(path.join(cwd, '\\folder')));
     expect(getContent(arr[0])).toBe('[Markdown](https://es.wikipedia.org/wiki/Markdow).[Node.js](https://nodejs.org/). mas informacion en [laboratoria 111111111111111111111111111111111111111111111111111](https://www.laboratoria.com).');
   });
 });
@@ -133,9 +135,47 @@ describe('getLinks', () => {
     expect(typeof getLinks).toBe('function');
   });
   it('Debería devolver un array de objetos(href, text, file)', () => {
-    const routeabs = cwd.concat('\\folder\\ALGO.md');
-    expect(getLinks(routeabs, getContent(routeabs))).toEqual([{ file: cwd.concat('\\folder\\ALGO.md'), href: 'https://es.wikipedia.org/wiki/Markdow', text: 'Markdown' }, { file: cwd.concat('\\folder\\ALGO.md'), href: 'https://nodejs.org/', text: 'Node.js' }, { file: cwd.concat('\\folder\\ALGO.md'), href: 'https://www.laboratoria.com', text: 'laboratoria 1111111111111111111111111111111111111' }]);
+    const routeabs = path.join(cwd, '\\folder\\ALGO.md');
+    expect(getLinks(routeabs, getContent(routeabs))).toEqual([{
+      file: path.join(cwd, '\\folder\\ALGO.md'),
+      href: 'https://es.wikipedia.org/wiki/Markdow',
+      text: 'Markdown',
+    }, {
+      file: path.join(cwd,
+        '\\folder\\ALGO.md'),
+      href: 'https://nodejs.org/',
+      text: 'Node.js',
+    }, {
+      file: path.join(cwd, '\\folder\\ALGO.md'),
+      href: 'https://www.laboratoria.com',
+      text: 'laboratoria 1111111111111111111111111111111111111',
+    }]);
   });
+});
+
+describe('getArrLinks', () => {
+  it('Debería ser una función', () => {
+    expect(typeof getArrLinks).toBe('function');
+  });
+  it('Debería retornar un array de objetos [{href,text,file}]', () => getArrLinks(cwd)
+    .then((res) => {
+      expect(res).toEqual([
+        {
+          file: path.join(cwd, '\\folder\\ALGO.md'),
+          href: 'https://es.wikipedia.org/wiki/Markdow',
+          text: 'Markdown',
+        },
+        {
+          file: path.join(cwd, '\\folder\\ALGO.md'),
+          href: 'https://nodejs.org/',
+          text: 'Node.js',
+        },
+        {
+          file: path.join(cwd, '\\folder\\ALGO.md'),
+          href: 'https://www.laboratoria.com',
+          text: 'laboratoria 1111111111111111111111111111111111111',
+        }]);
+    }));
 });
 
 describe('validateLinks', () => {
